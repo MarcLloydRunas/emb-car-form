@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMB-CAR | Proposed Optimization Actions Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #1b3a2d;
+  --forest-mid: #2d5a42;
+  --forest-light: #4a8c6a;
+  --sage: #7eb89a;
+  --mint: #c8e6d4;
+  --cream: #f6f3ed;
+  --warm: #fdfcf8;
+  --ink: #1a1a1c;
+  --ink-mid: #4a4a50;
+  --ink-faint: #909098;
+  --border: #d4ddd6;
+  --border-mid: #b0c4b8;
+  --gold: #c8952a;
+  --gold-light: #fdf4e3;
+  --red: #b03a2e;
+  --red-light: #fdecea;
+  --blue: #2874a6;
+  --blue-light: #eaf3fb;
+  --shadow: 0 2px 12px rgba(27,58,45,0.08);
+  --shadow-lg: 0 8px 32px rgba(27,58,45,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--forest);
+  color: white;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header-inner {
+  display: flex;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.header-stripe {
+  width: 6px;
+  background: var(--sage);
+  flex-shrink: 0;
+}
+.header-content {
+  padding: 28px 36px 24px;
+  flex: 1;
+}
+.header-eyebrow {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--sage);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  margin-bottom: 4px;
+}
+.header-sub {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+}
+.header-badge {
+  display: flex;
+  align-items: center;
+  padding: 0 36px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.header-badge .badge-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sage);
+  font-weight: 600;
+}
+.header-badge .badge-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+
+/* ── PAGE ── */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ── TABS (entry log) ── */
+.log-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.tab {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ink-mid);
+  white-space: nowrap;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab.active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: white;
+}
+.tab:hover:not(.active) {
+  border-color: var(--forest-light);
+  color: var(--forest);
+}
+.tab-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.6;
+  padding: 0 0 0 2px;
+}
+.tab-close:hover { opacity: 1; }
+.btn-new-entry {
+  background: var(--gold-light);
+  border: 1.5px dashed var(--gold);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--gold);
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.btn-new-entry:hover {
+  background: var(--gold);
+  color: white;
+}
+
+/* ── META ROW ── */
+.meta-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  box-shadow: var(--shadow);
+}
+.meta-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+.meta-field input, .meta-field select {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 8px 11px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--cream);
+  transition: border-color 0.15s, background 0.15s;
+}
+.meta-field input:focus, .meta-field select:focus {
+  outline: none;
+  border-color: var(--forest-light);
+  background: white;
+}
+
+/* ── SECTION CARD ── */
+.section-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--forest);
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+.section-head:hover { background: var(--forest-mid); }
+.section-badge {
+  background: var(--sage);
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  flex: 1;
+}
+.section-toggle {
+  font-size: 16px;
+  opacity: 0.7;
+  transition: transform 0.2s;
+}
+.section-toggle.open { transform: rotate(180deg); }
+.section-body {
+  padding: 22px 20px;
+}
+.section-body.collapsed { display: none; }
+
+/* ── LEGEND ── */
+.legend {
+  background: var(--gold-light);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 5px 5px 0;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 12px;
+}
+.legend strong {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 20px;
+}
+@media(max-width:600px){ .legend-grid { grid-template-columns: 1fr; } }
+.legend-item {
+  display: flex;
+  gap: 6px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.legend-item::before { content: '·'; color: var(--gold); font-weight: 700; }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; margin-bottom: 12px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  min-width: 700px;
+}
+thead tr { background: var(--mint); }
+th {
+  padding: 9px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--forest);
+  border: 1px solid var(--border-mid);
+  text-align: left;
+  vertical-align: middle;
+}
+td {
+  border: 1px solid var(--border);
+  padding: 4px 5px;
+  vertical-align: top;
+}
+td input, td select, td textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--ink);
+  padding: 5px 6px;
+  resize: none;
+  min-height: 34px;
+  line-height: 1.4;
+}
+td input:focus, td select:focus, td textarea:focus {
+  outline: 1.5px solid var(--sage);
+  background: #f0faf5;
+  border-radius: 3px;
+}
+td select { cursor: pointer; }
+tbody tr:nth-child(even) { background: #f8faf9; }
+tbody tr:hover td { background: var(--mint); }
+.del-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--red);
+  font-size: 15px;
+  padding: 5px 7px;
+  border-radius: 3px;
+  line-height: 1;
+}
+.del-btn:hover { background: var(--red-light); }
+.add-row-btn {
+  background: none;
+  border: 1.5px dashed var(--forest-light);
+  color: var(--forest-light);
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.15s;
+}
+.add-row-btn:hover {
+  background: var(--mint);
+  border-color: var(--forest);
+  color: var(--forest);
+}
+.row-end { display: flex; justify-content: flex-end; }
+
+/* ── TEXT AREAS ── */
+.field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 6px;
+}
+@media(max-width:640px){ .field-pair { grid-template-columns: 1fr; } }
+.field-block label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+.field-block textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--cream);
+  resize: vertical;
+  line-height: 1.55;
+  transition: border-color 0.15s, background 0.15s;
+}
+.field-block textarea:focus {
+  outline: none;
+  border-color: var(--forest-light);
+  background: white;
+}
+.hint { font-size: 11px; color: var(--ink-faint); font-style: italic; margin-top: 5px; }
+
+/* ── INDICATORS ── */
+.indicator-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.ind-num {
+  background: var(--forest-mid);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.indicator-row input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--cream);
+  transition: border-color 0.15s, background 0.15s;
+}
+.indicator-row input:focus {
+  outline: none;
+  border-color: var(--forest-light);
+  background: white;
+}
+
+/* ── FOOTER ── */
+.form-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+.btn-sec {
+  background: white;
+  border: 1.5px solid var(--border-mid);
+  color: var(--ink-mid);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-sec:hover { border-color: var(--forest-light); color: var(--forest); }
+.btn-primary {
+  background: var(--forest);
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--forest-mid); }
+
+/* ── STATUS TAG ── */
+.status-filled { color: var(--forest-mid); font-size: 11px; font-weight: 600; }
+.status-vacant { color: var(--red); font-size: 11px; font-style: italic; }
+
+@media print {
+  .log-bar, .add-row-btn, .del-btn, .form-footer, .section-toggle { display: none !important; }
+  body { background: white; }
+  .header { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .section-card, .meta-card { box-shadow: none; border: 1px solid #ccc; }
+  .page { padding: 12px; max-width: 100%; }
+  .section-body.collapsed { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-stripe"></div>
+    <div class="header-content">
+      <div class="header-eyebrow">Department of Environment and Natural Resources</div>
+      <h1>Proposed Optimization Actions</h1>
+      <div class="header-sub">Rationalization Plan Review · Organizational Assessment Form · FY 2025</div>
+    </div>
+    <div class="header-badge">
+      <div class="badge-label">Bureau</div>
+      <div class="badge-val">EMB-CAR</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ENTRY LOG TABS -->
+  <div class="log-bar" id="logBar">
+    <button class="btn-new-entry" onclick="newEntry()">＋ New Entry</button>
+  </div>
+
+  <!-- ENTRY CONTAINER -->
+  <div id="entryContainer"></div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   PLANTILLA DATA  (extracted from PSIPOPs)
+═══════════════════════════════════════════ */
+const PLANTILLA = {
+  ORD: [
+    { item: 'EMBB-DIR2-5-2014',    title: 'Director II - 26',                   incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-ATY3-10-2014',   title: 'Attorney III - 21',                  incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-PLO2-33-2014',   title: 'Planning Officer II - 15',            incumbent: 'Vallo, Jonathan N.' },
+    { item: 'EMBB-ADAS1-46-2004',  title: 'Administrative Assistant I - 07',     incumbent: 'Mero, Liza V.' },
+    { item: 'EMBB-ADA4-35-2014',   title: 'Administrative Aide IV - 04',         incumbent: 'Wangag, Miguel M.' },
+  ],
+  FAD: [
+    { item: 'EMBB-CADOF-34-2014',  title: 'Chief Administrative Officer - 24',   incumbent: 'Andres, Eldelinita D.' },
+    { item: 'EMBB-SADOF-8-2014',   title: 'Supervising Administrative Officer - 22', incumbent: 'Abella, Fritzie D.' },
+    { item: 'EMBB-A3-9-2014',      title: 'Accountant III - 19',                 incumbent: 'Abarquez, Imelda A.' },
+    { item: 'EMBB-ADOF5-6-2014',   title: 'Administrative Officer V - 18',       incumbent: 'Cayat, Elvie P.' },
+    { item: 'EMBB-ADOF4-6-2004',   title: 'Administrative Officer IV - 15',      incumbent: 'Basinga, Virginia T.' },
+    { item: 'EMBB-ADOF4-8-2014',   title: 'Administrative Officer IV - 15',      incumbent: 'Dones, Carina G.' },
+    { item: 'EMBB-ADOF3-11-2014',  title: 'Administrative Officer III - 14',     incumbent: 'Tangangco, Fara Marie L.' },
+    { item: 'EMBB-ADOF3-12-2014',  title: 'Administrative Officer III - 14',     incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-ADOF3-13-2014',  title: 'Administrative Officer III - 14',     incumbent: 'Mangaliag, Adella L.' },
+    { item: 'EMBB-ADAS3-8-2014',   title: 'Administrative Assistant III - 09',   incumbent: 'Versola, Imelda D.' },
+    { item: 'EMBB-ADAS3-9-2014',   title: 'Administrative Assistant III - 09',   incumbent: 'Florendo, Sallie D.' },
+    { item: 'EMBB-ADAS2-41-2004',  title: 'Administrative Assistant II - 08',    incumbent: 'Suguitan, Mary Ann A.' },
+    { item: 'EMBB-ADAS2-45-2014',  title: 'Administrative Assistant II - 08',    incumbent: 'Weygan, Marilou P.' },
+  ],
+  EMED: [
+    { item: 'EMBB-CEVNMS-25-2000', title: 'Chief Environmental Management Specialist - 24', incumbent: 'Cubangay, Raul G.' },
+    { item: 'EMBB-ENG4-37-2014',   title: 'Engineer IV - 22',                   incumbent: 'Barton, Lowell Jr. G.' },
+    { item: 'EMBB-ENG4-38-2014',   title: 'Engineer IV - 22',                   incumbent: 'Aguilar, Ester L.' },
+    { item: 'EMBB-SVENMS-22-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Solano, Mark Anthony P.' },
+    { item: 'EMBB-SVENMS-58-2000', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Canao, Liza L.' },
+    { item: 'EMBB-ENG3-28-2014',   title: 'Engineer III - 19',                  incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-ENG3-29-2014',   title: 'Engineer III - 19',                  incumbent: 'Tiwaquen, Rodolfo Jr. M.' },
+    { item: 'EMBB-CMT3-31-2014',   title: 'Chemist III - 18',                   incumbent: 'Tepait, Eliaquem L.' },
+    { item: 'EMBB-SRENM-24-2014',  title: 'Senior Environmental Management Specialist - 18', incumbent: 'Alvear, Almira M.' },
+    { item: 'EMBB-SRENM-162-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Menguria, Maureen F.' },
+    { item: 'EMBB-SRENM-163-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-SRENM-164-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Sitsit, Fernie D.' },
+    { item: 'EMBB-SRENM-165-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Rufino, Kenedy M.' },
+    { item: 'EMBB-SRENM-172-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Balanon, Marvin Clarke K.' },
+    { item: 'EMBB-SRENM-173-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Banco, Estrella T.' },
+    { item: 'EMBB-ENG2-36-2014',   title: 'Engineer II - 16',                   incumbent: 'Raymundo, Garth S.' },
+    { item: 'EMBB-ENG2-37-2014',   title: 'Engineer II - 16',                   incumbent: 'Ringor, Ronald F.' },
+    { item: 'EMBB-CMT2-63-2014',   title: 'Chemist II - 15',                    incumbent: 'Peroja, Khennyie-Ar G.' },
+    { item: 'EMBB-EMS2-6-2004',    title: 'Environmental Management Specialist II - 15', incumbent: 'Malamug, Ginnie Lyko Q.' },
+    { item: 'EMBB-EMS2-7-2004',    title: 'Environmental Management Specialist II - 15', incumbent: 'Aggabao, Analynne M.' },
+    { item: 'EMBB-EMS2-115-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Paneda, Brenda A.' },
+    { item: 'EMBB-EMS2-117-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Bimuyag, Walter C.' },
+    { item: 'EMBB-EMS2-121-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Baluga, Leslie Gem R.' },
+    { item: 'EMBB-EMS2-122-2000',  title: 'Environmental Management Specialist II - 15', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS2-124-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Berdal, Randy N.' },
+    { item: 'EMBB-INFO2-65-2014',  title: 'Information Officer II - 15',         incumbent: 'Luminang, Mary Claire S.' },
+    { item: 'EMBB-EMS1-63-2000',   title: 'Environmental Management Specialist I - 11', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS1-88-2014',   title: 'Environmental Management Specialist I - 11', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS1-89-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Pasi, Hannah Kate E.' },
+    { item: 'EMBB-EMS1-90-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Ating, Dwight Paul C.' },
+    { item: 'EMBB-EMS1-91-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Esmande, Rochel T.' },
+    { item: 'EMBB-EMS1-92-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Romorosa, Dennis S.' },
+    { item: 'EMBB-EMS1-93-2014',   title: 'Environmental Management Specialist I - 11', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS1-94-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Boacon, Lala D.' },
+    { item: 'EMBB-EMS1-95-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Awing, Cherilyn B.' },
+  ],
+  CPD: [
+    { item: 'EMBB-CEVNMS-36-2014', title: 'Chief Environmental Management Specialist - 24', incumbent: 'Rodas, Marie Pina L.' },
+    { item: 'EMBB-ENG4-36-2014',   title: 'Engineer IV - 22',                   incumbent: 'Kewan, Aldrick B.' },
+    { item: 'EMBB-SVENMS-20-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Solano, Grace I.' },
+    { item: 'EMBB-SVENMS-21-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Guerrero, Alice B.' },
+    { item: 'EMBB-SVENMS-23-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Langgawan, Randy S.' },
+    { item: 'EMBB-SVENMS-24-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Ta-a, Ria T.' },
+    { item: 'EMBB-SVENMS-25-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Tuguinay, Gaspar G.' },
+    { item: 'EMBB-SVENMS-26-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Apilis, Paul G.' },
+    { item: 'EMBB-SVENMS-27-2014', title: 'Supervising Environmental Management Specialist - 22', incumbent: 'Wangag, Richard M.' },
+    { item: 'EMBB-ENG3-26-2014',   title: 'Engineer III - 19',                  incumbent: 'Charopang, Marjorie L.' },
+    { item: 'EMBB-ENG3-27-2014',   title: 'Engineer III - 19',                  incumbent: 'Abellera, Mclister A.' },
+    { item: 'EMBB-SRENM-168-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Turiano, Hope P.' },
+    { item: 'EMBB-SRENM-170-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-SRENM-171-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Agyao, Aubrey B.' },
+    { item: 'EMBB-SRENM-174-2000', title: 'Senior Environmental Management Specialist - 18', incumbent: 'Amogan, Myla T.' },
+    { item: 'EMBB-ENG2-35-2014',   title: 'Engineer II - 16',                   incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS2-79-2014',   title: 'Environmental Management Specialist II - 15', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS2-80-2014',   title: 'Environmental Management Specialist II - 15', incumbent: 'Lumerez, Jefferson B.' },
+    { item: 'EMBB-EMS2-81-2014',   title: 'Environmental Management Specialist II - 15', incumbent: 'Tangan, Mark Benjamin T.' },
+    { item: 'EMBB-EMS2-116-2000',  title: 'Environmental Management Specialist II - 15', incumbent: '(Vacant)',          vacant: true },
+    { item: 'EMBB-EMS2-118-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Mego, Mary Lyn P.' },
+    { item: 'EMBB-EMS2-119-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Poclis, Nestor Jr. B.' },
+    { item: 'EMBB-EMS2-120-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Mendoza, Imelda D.' },
+    { item: 'EMBB-EMS2-123-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Codmos, Kesha B.' },
+    { item: 'EMBB-EMS2-125-2000',  title: 'Environmental Management Specialist II - 15', incumbent: 'Galang, Sheila Grace R.' },
+    { item: 'EMBB-EMS1-64-2000',   title: 'Environmental Management Specialist I - 11', incumbent: 'Canao, Novie Fenn B.' },
+    { item: 'EMBB-EMS1-84-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Manlongat, Jessica S.' },
+    { item: 'EMBB-EMS1-85-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Bangngagan, Ruck L.' },
+    { item: 'EMBB-EMS1-86-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Cabatu, Rae Anne Valerie L.' },
+    { item: 'EMBB-EMS1-87-2014',   title: 'Environmental Management Specialist I - 11', incumbent: 'Toyokan, Hagai D.' },
+  ]
+};
+
+const DIVISIONS = ['ORD', 'EMED', 'CPD', 'FAD'];
+
+const SECTIONS = {
+  ORD:  ['Regional PEMUS', 'EEIU', 'PISMU'],
+  EMED: ['SWMS', 'AMS', 'WQMS', 'CHWMS'],
+  CPD:  ['EIAS', 'AWPS', 'CHWPS'],
+  FAD:  ['Finance Section', 'Admin Section'],
+};
+
+const CLASSIFICATIONS = [
+  '', 'Core/Strategic', 'Supportive/Enabling', 'Redundant/Outdated/Non-Essential',
+  'For Devolution to LGUs', 'For Outsourcing to Private Sector',
+  'For Digitization/Automation', 'For Integration with Other Agencies', 'Non-Core/Others'
+];
+
+const OPT_ACTIONS = [
+  '', 'Retention', 'Merger/Consolidation', 'Transfer', 'Upgrading', 'Creation',
+  'Abolition', 'Outsourcing', 'Devolution', 'Digitization'
+];
+
+/* ═══════════════════════════════════════════
+   ENTRY / TAB MANAGEMENT
+═══════════════════════════════════════════ */
+let entries = [];
+let activeId = null;
+let entryCounter = 0;
+
+function newEntry() {
+  entryCounter++;
+  const id = 'entry_' + entryCounter;
+  entries.push({ id, label: 'Entry ' + entryCounter });
+  renderTabs();
+  switchEntry(id);
+}
+
+function renderTabs() {
+  const bar = document.getElementById('logBar');
+  // keep + button
+  const btn = bar.querySelector('.btn-new-entry');
+  bar.innerHTML = '';
+  entries.forEach(e => {
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (e.id === activeId ? ' active' : '');
+    tab.innerHTML = `${e.label}<button class="tab-close" onclick="deleteEntry('${e.id}',event)">✕</button>`;
+    tab.addEventListener('click', () => switchEntry(e.id));
+    bar.appendChild(tab);
+  });
+  bar.appendChild(btn);
+}
+
+function switchEntry(id) {
+  // hide all
+  document.querySelectorAll('.entry-block').forEach(b => b.style.display = 'none');
+  activeId = id;
+  renderTabs();
+  let block = document.getElementById(id);
+  if (!block) {
+    block = buildEntryBlock(id);
+    document.getElementById('entryContainer').appendChild(block);
+  }
+  block.style.display = 'block';
+}
+
+function deleteEntry(id, e) {
+  e.stopPropagation();
+  if (entries.length === 1) { alert('At least one entry is required.'); return; }
+  entries = entries.filter(x => x.id !== id);
+  const block = document.getElementById(id);
+  if (block) block.remove();
+  if (activeId === id) switchEntry(entries[entries.length - 1].id);
+  else renderTabs();
+}
+
+/* ═══════════════════════════════════════════
+   BUILD ENTRY BLOCK
+═══════════════════════════════════════════ */
+function buildEntryBlock(id) {
+  const wrap = document.createElement('div');
+  wrap.className = 'entry-block';
+  wrap.id = id;
+  wrap.innerHTML = `
+    <!-- META -->
+    <div class="meta-card">
+      <div class="meta-field">
+        <label>Bureau / Service / Office</label>
+        <input type="text" value="EMB-CAR" placeholder="Bureau name">
+      </div>
+      <div class="meta-field">
+        <label>Division</label>
+        <select class="div-sel" onchange="onDivChange(this,'${id}')">
+          <option value="">— Select Division —</option>
+          ${DIVISIONS.map(d=>`<option value="${d}">${d}</option>`).join('')}
+        </select>
+      </div>
+      <div class="meta-field">
+        <label>Section</label>
+        <select class="sec-sel" disabled>
+          <option value="">— Select Division first —</option>
+        </select>
+      </div>
+      <div class="meta-field">
+        <label>Date Accomplished</label>
+        <input type="date" value="${new Date().toISOString().split('T')[0]}">
+      </div>
+    </div>
+
+    <!-- SECTION A -->
+    <div class="section-card">
+      <div class="section-head" onclick="toggleSection(this)">
+        <span class="section-badge">A</span>
+        <span class="section-title">Proposed Optimization Actions</span>
+        <span class="section-toggle open">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="legend">
+          <strong>Classification of Functions / Services / PAPs</strong>
+          <div class="legend-grid">
+            <div class="legend-item">Core/Strategic — directly aligned with legal mandate &amp; national priorities</div>
+            <div class="legend-item">Supportive/Enabling — facilitates delivery of core functions</div>
+            <div class="legend-item">Redundant/Outdated — may be streamlined, transferred, or discontinued</div>
+            <div class="legend-item">For Devolution — may be devolved to LGUs</div>
+            <div class="legend-item">For Outsourcing — may be contracted to private sector</div>
+            <div class="legend-item">For Digitization — may be digitized or automated</div>
+            <div class="legend-item">For Integration — may be shared with other agencies</div>
+            <div class="legend-item">Non-Core/Others — peripheral or auxiliary functions</div>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Functions / Services</th>
+                <th style="width:30%">PAPs (Plantilla Item)</th>
+                <th style="width:26%">Classification</th>
+                <th style="width:16%">Proposed Optimization Action</th>
+                <th style="width:6%">Del</th>
+              </tr>
+            </thead>
+            <tbody class="opt-body" data-entry="${id}"></tbody>
+          </table>
+        </div>
+        <div class="row-end"><button class="add-row-btn" onclick="addOptRow('${id}')">＋ Add Row</button></div>
+      </div>
+    </div>
+
+    <!-- SECTION I -->
+    <div class="section-card">
+      <div class="section-head" onclick="toggleSection(this)">
+        <span class="section-badge">I</span>
+        <span class="section-title">Issues &amp; Challenges in Implementing the 2006 Rationalization Plan</span>
+        <span class="section-toggle open">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="field-pair">
+          <div class="field-block">
+            <label>What Worked</label>
+            <textarea rows="5" placeholder="Describe effective aspects of the 2006 Rationalization Plan…"></textarea>
+            <div class="hint">e.g. Merit selection process was transparent and yielded competent placements.</div>
+          </div>
+          <div class="field-block">
+            <label>What Did Not Work</label>
+            <textarea rows="5" placeholder="Describe what failed or created problems…"></textarea>
+            <div class="hint">e.g. Merit selection process needs improvement to ensure correct competencies were placed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION II -->
+    <div class="section-card">
+      <div class="section-head" onclick="toggleSection(this)">
+        <span class="section-badge">II</span>
+        <span class="section-title">Organizational Review</span>
+        <span class="section-toggle open">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Mandates / Functions</th>
+                <th>Division/s Within Bureau</th>
+                <th>Offices Within DENR (similar/related)</th>
+                <th>Offices Outside DENR — LGUs, NGAs (similar/related)</th>
+                <th>Challenges / Gaps</th>
+                <th>Recommendations (policies, systems, staffing, resources)</th>
+                <th>Remarks</th>
+                <th>Del</th>
+              </tr>
+            </thead>
+            <tbody class="rev-body" data-entry="${id}"></tbody>
+          </table>
+        </div>
+        <div class="row-end"><button class="add-row-btn" onclick="addRevRow('${id}')">＋ Add Row</button></div>
+      </div>
+    </div>
+
+    <!-- SECTION III -->
+    <div class="section-card">
+      <div class="section-head" onclick="toggleSection(this)">
+        <span class="section-badge">III</span>
+        <span class="section-title">Indicators of an Effective Optimization Plan for DENR</span>
+        <span class="section-toggle open">▾</span>
+      </div>
+      <div class="section-body">
+        <p style="font-size:12.5px;color:var(--ink-mid);margin-bottom:14px;">
+          Indicators must be <strong>Specific, Measurable, Attainable, Realistic, and Timebound (SMART)</strong>.
+        </p>
+        <div class="hint" style="margin-bottom:14px;">Example: Policy or system identified to mainstream natural capital accounting in land management.</div>
+        <div class="ind-list" data-entry="${id}"></div>
+        <div class="row-end" style="margin-top:8px;"><button class="add-row-btn" onclick="addIndicator('${id}')">＋ Add Indicator</button></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="form-footer">
+      <button class="btn-sec" onclick="window.print()">🖨 Print / PDF</button>
+      <button class="btn-sec" onclick="exportEntry('${id}')">⬇ Export JSON</button>
+      <button class="btn-sec" onclick="exportWord('${id}')">📄 Export Word</button>
+      <button class="btn-primary" onclick="submitEntry('${id}')">✉ Submit via Email</button>
+    </div>
+  `;
+
+  // seed rows
+  setTimeout(() => {
+    addOptRow(id); addOptRow(id);
+    addRevRow(id); addRevRow(id);
+    addIndicator(id); addIndicator(id); addIndicator(id);
+  }, 0);
+
+  return wrap;
+}
+
+/* ═══════════════════════════════════════════
+   CASCADING DIVISION → SECTION
+═══════════════════════════════════════════ */
+function onDivChange(sel, entryId) {
+  const div = sel.value;
+  const block = document.getElementById(entryId);
+  const secSel = block.querySelector('.sec-sel');
+  secSel.innerHTML = '';
+  if (!div) {
+    secSel.innerHTML = '<option value="">— Select Division first —</option>';
+    secSel.disabled = true;
+  } else {
+    secSel.disabled = false;
+    secSel.innerHTML = '<option value="">— Select Section —</option>' +
+      (SECTIONS[div] || []).map(s => `<option value="${s}">${s}</option>`).join('');
+  }
+  // refresh PAP dropdowns in opt table for this entry
+  block.querySelectorAll('.pap-sel').forEach(ps => refreshPapDropdown(ps, div));
+  // update tab label
+  const entry = entries.find(e => e.id === entryId);
+  if (entry) { entry.label = div || ('Entry ' + entryCounter); renderTabs(); }
+}
+
+/* ═══════════════════════════════════════════
+   PAP DROPDOWN
+═══════════════════════════════════════════ */
+function refreshPapDropdown(sel, div) {
+  const current = sel.value;
+  sel.innerHTML = '<option value="">— Select Item —</option>';
+  if (div && PLANTILLA[div]) {
+    PLANTILLA[div].forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.item;
+      opt.textContent = `${p.item} — ${p.title} — ${p.incumbent}`;
+      if (p.vacant) opt.style.color = 'var(--red)';
+      if (p.item === current) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════
+   OPT TABLE ROWS
+═══════════════════════════════════════════ */
+function addOptRow(entryId) {
+  const tbody = document.querySelector(`.opt-body[data-entry="${entryId}"]`);
+  const block = document.getElementById(entryId);
+  const currentDiv = block.querySelector('.div-sel').value;
+  const tr = document.createElement('tr');
+
+  // Functions/Services
+  const tdFunc = document.createElement('td');
+  const taFunc = document.createElement('textarea');
+  taFunc.placeholder = 'Describe functions/services…'; taFunc.rows = 2;
+  tdFunc.appendChild(taFunc); tr.appendChild(tdFunc);
+
+  // PAPs
+  const tdPap = document.createElement('td');
+  const selPap = document.createElement('select');
+  selPap.className = 'pap-sel';
+  refreshPapDropdown(selPap, currentDiv);
+  tdPap.appendChild(selPap); tr.appendChild(tdPap);
+
+  // Classification
+  const tdClass = document.createElement('td');
+  const selClass = document.createElement('select');
+  CLASSIFICATIONS.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c; o.textContent = c || '— Select —';
+    selClass.appendChild(o);
+  });
+  tdClass.appendChild(selClass); tr.appendChild(tdClass);
+
+  // Opt Action
+  const tdAct = document.createElement('td');
+  const selAct = document.createElement('select');
+  OPT_ACTIONS.forEach(a => {
+    const o = document.createElement('option');
+    o.value = a; o.textContent = a || '— Select —';
+    selAct.appendChild(o);
+  });
+  tdAct.appendChild(selAct); tr.appendChild(tdAct);
+
+  // Delete
+  const tdDel = document.createElement('td');
+  tdDel.style.textAlign = 'center';
+  const btn = document.createElement('button');
+  btn.className = 'del-btn'; btn.textContent = '✕';
+  btn.onclick = () => tr.remove();
+  tdDel.appendChild(btn); tr.appendChild(tdDel);
+
+  tbody.appendChild(tr);
+}
+
+/* ═══════════════════════════════════════════
+   REVIEW TABLE ROWS
+═══════════════════════════════════════════ */
+function addRevRow(entryId) {
+  const tbody = document.querySelector(`.rev-body[data-entry="${entryId}"]`);
+  const tr = document.createElement('tr');
+  const placeholders = [
+    'Mandate or function…', 'Division/s responsible…', 'DENR offices with similar function…',
+    'LGUs/NGAs with similar function…', 'Key challenges or gaps…',
+    'Recommended actions…', 'Remarks…'
+  ];
+  placeholders.forEach(ph => {
+    const td = document.createElement('td');
+    const ta = document.createElement('textarea');
+    ta.rows = 2; ta.placeholder = ph;
+    td.appendChild(ta); tr.appendChild(td);
+  });
+  const tdDel = document.createElement('td');
+  tdDel.style.textAlign = 'center';
+  const btn = document.createElement('button');
+  btn.className = 'del-btn'; btn.textContent = '✕';
+  btn.onclick = () => tr.remove();
+  tdDel.appendChild(btn); tr.appendChild(tdDel);
+  tbody.appendChild(tr);
+}
+
+/* ═══════════════════════════════════════════
+   INDICATORS
+═══════════════════════════════════════════ */
+const indCounters = {};
+function addIndicator(entryId) {
+  if (!indCounters[entryId]) indCounters[entryId] = 0;
+  indCounters[entryId]++;
+  const list = document.querySelector(`.ind-list[data-entry="${entryId}"]`);
+  const row = document.createElement('div');
+  row.className = 'indicator-row';
+  row.innerHTML = `
+    <div class="ind-num">${indCounters[entryId]}</div>
+    <input type="text" placeholder="Enter a SMART indicator…">
+    <button class="del-btn" onclick="this.parentElement.remove()" style="flex-shrink:0">✕</button>
+  `;
+  list.appendChild(row);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION COLLAPSE
+═══════════════════════════════════════════ */
+function toggleSection(head) {
+  const body = head.nextElementSibling;
+  const tog = head.querySelector('.section-toggle');
+  body.classList.toggle('collapsed');
+  tog.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT JSON
+═══════════════════════════════════════════ */
+function exportEntry(entryId) {
+  const data = collectData(entryId);
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `emb-car_opt_${data.division || 'entry'}_${data.date || 'export'}.json`;
+  a.click();
+}
+
+/* ── INIT ── */
+newEntry();
+
+/* ═══════════════════════════════════════════
+   COLLECT ENTRY DATA
+═══════════════════════════════════════════ */
+function collectData(entryId) {
+  const block = document.getElementById(entryId);
+  const inputs = block.querySelectorAll('.meta-card input, .meta-card select');
+  const data = {
+    bureau: inputs[0]?.value || '',
+    division: inputs[1]?.value || '',
+    section: inputs[2]?.value || '',
+    date: inputs[3]?.value || '',
+    optimizationActions: [],
+    issuesAndChallenges: {},
+    organizationalReview: [],
+    effectivenessIndicators: []
+  };
+  block.querySelectorAll('.opt-body tr').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    data.optimizationActions.push({
+      functionsServices: cells[0]?.querySelector('textarea')?.value || '',
+      pap: cells[1]?.querySelector('select')?.value || '',
+      classification: cells[2]?.querySelector('select')?.value || '',
+      proposedAction: cells[3]?.querySelector('select')?.value || ''
+    });
+  });
+  const tas = block.querySelectorAll('.section-body textarea');
+  data.issuesAndChallenges.whatWorked = tas[0]?.value || '';
+  data.issuesAndChallenges.whatDidNotWork = tas[1]?.value || '';
+  block.querySelectorAll('.rev-body tr').forEach(tr => {
+    const ta = tr.querySelectorAll('textarea');
+    data.organizationalReview.push({
+      mandates: ta[0]?.value || '',
+      divisionsWithin: ta[1]?.value || '',
+      officesWithinDENR: ta[2]?.value || '',
+      officesOutsideDENR: ta[3]?.value || '',
+      challengesGaps: ta[4]?.value || '',
+      recommendations: ta[5]?.value || '',
+      remarks: ta[6]?.value || ''
+    });
+  });
+  block.querySelectorAll('.ind-list input').forEach(i => {
+    if (i.value) data.effectivenessIndicators.push(i.value);
+  });
+  return data;
+}
+
+/* ═══════════════════════════════════════════
+   SUBMIT VIA EMAIL (GMAIL MAILTO)
+═══════════════════════════════════════════ */
+function submitEntry(entryId) {
+  document.getElementById('emailModal').style.display = 'flex';
+  document.getElementById('emailModal').dataset.entryId = entryId;
+}
+
+function closeModal() {
+  document.getElementById('emailModal').style.display = 'none';
+}
+
+function sendEmail() {
+  const entryId = document.getElementById('emailModal').dataset.entryId;
+  const recipient = document.getElementById('emailRecipient').value.trim();
+  if (!recipient) { alert('Please enter a recipient email address.'); return; }
+
+  const data = collectData(entryId);
+  const label = `${data.division || 'Entry'} — ${data.section || ''} — ${data.date || ''}`.trim();
+
+  let body = `EMB-CAR OPTIMIZATION FORM SUBMISSION\n`;
+  body += `=====================================\n\n`;
+  body += `Bureau / Service / Office: ${data.bureau}\n`;
+  body += `Division: ${data.division}\n`;
+  body += `Section: ${data.section}\n`;
+  body += `Date Accomplished: ${data.date}\n\n`;
+
+  body += `SECTION A — PROPOSED OPTIMIZATION ACTIONS\n`;
+  body += `------------------------------------------\n`;
+  data.optimizationActions.forEach((row, i) => {
+    body += `Row ${i+1}:\n`;
+    body += `  Functions/Services: ${row.functionsServices}\n`;
+    body += `  PAP: ${row.pap}\n`;
+    body += `  Classification: ${row.classification}\n`;
+    body += `  Proposed Action: ${row.proposedAction}\n`;
+  });
+
+  body += `\nSECTION I — ISSUES & CHALLENGES\n`;
+  body += `--------------------------------\n`;
+  body += `What Worked:\n${data.issuesAndChallenges.whatWorked}\n\n`;
+  body += `What Did Not Work:\n${data.issuesAndChallenges.whatDidNotWork}\n\n`;
+
+  body += `SECTION II — ORGANIZATIONAL REVIEW\n`;
+  body += `------------------------------------\n`;
+  data.organizationalReview.forEach((row, i) => {
+    body += `Row ${i+1}: ${row.mandates} | ${row.divisionsWithin} | ${row.officesWithinDENR} | ${row.officesOutsideDENR} | ${row.challengesGaps} | ${row.recommendations} | ${row.remarks}\n`;
+  });
+
+  body += `\nSECTION III — EFFECTIVENESS INDICATORS\n`;
+  body += `---------------------------------------\n`;
+  data.effectivenessIndicators.forEach((ind, i) => {
+    body += `${i+1}. ${ind}\n`;
+  });
+
+  const subject = encodeURIComponent(`EMB-CAR Optimization Form — ${label}`);
+  const bodyEnc = encodeURIComponent(body);
+  window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${subject}&body=${bodyEnc}`;
+  closeModal();
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT TO WORD (Template 2 structure)
+   Uses server-side script via hidden form post
+   Fallback: download JSON for manual use
+═══════════════════════════════════════════ */
+function exportWord(entryId) {
+  const data = collectData(entryId);
+
+  // Build a human-readable HTML that mimics Template 2 for Word copy-paste
+  const section = data.section || data.division || 'N/A';
+  let rows = data.optimizationActions.map(r =>
+    `<tr>
+      <td>${section}</td>
+      <td>${r.functionsServices}</td>
+      <td>${r.pap}</td>
+      <td>${r.classification}</td>
+      <td>${r.proposedAction}</td>
+    </tr>`
+  ).join('');
+
+  let revRows = data.organizationalReview.map(r =>
+    `<tr>
+      <td>${r.mandates}</td>
+      <td>${r.divisionsWithin}</td>
+      <td>${r.officesWithinDENR}</td>
+      <td>${r.officesOutsideDENR}</td>
+      <td>${r.challengesGaps}</td>
+      <td>${r.recommendations}</td>
+      <td>${r.remarks}</td>
+    </tr>`
+  ).join('');
+
+  const html = `
+    <html><head><meta charset="UTF-8">
+    <style>
+      body { font-family: Arial, sans-serif; font-size: 11pt; margin: 2cm; }
+      h1 { font-size: 13pt; text-align: center; }
+      h2 { font-size: 12pt; }
+      h3 { font-size: 11pt; }
+      table { border-collapse: collapse; width: 100%; margin-bottom: 18pt; }
+      th, td { border: 1px solid #333; padding: 5px 8px; font-size: 10pt; vertical-align: top; }
+      th { background: #c8e6d4; font-weight: bold; }
+      .meta { margin-bottom: 14pt; }
+      .section-label { font-weight: bold; margin: 12pt 0 4pt; }
+    </style>
+    </head><body>
+    <h1>DENR COMMITTEE ON OPTIMIZING DENR ORGANIZATION</h1>
+    <h2 style="text-align:center">PROPOSED OPTIMIZATION ACTIONS</h2>
+    <div class="meta">
+      <b>Bureau / Service / Office:</b> ${data.bureau}<br>
+      <b>Division:</b> ${data.division}<br>
+      <b>Section:</b> ${data.section}<br>
+      <b>Date Accomplished:</b> ${data.date}
+    </div>
+
+    <div class="section-label">Section A — Proposed Optimization Actions</div>
+    <table>
+      <tr>
+        <th>Name of Organizational Units</th>
+        <th>Functions / Services</th>
+        <th>PAPs</th>
+        <th>Classification of Functions/Services/PAPs</th>
+        <th>Proposed Optimization Actions</th>
+      </tr>
+      ${rows || '<tr><td colspan="5">(No data)</td></tr>'}
+    </table>
+
+    <div class="section-label">Section I — Issues &amp; Challenges in Implementing the 2006 Rationalization Plan</div>
+    <p><b>What Worked:</b><br>${(data.issuesAndChallenges.whatWorked || '').replace(/\n/g,'<br>')}</p>
+    <p><b>What Did Not Work:</b><br>${(data.issuesAndChallenges.whatDidNotWork || '').replace(/\n/g,'<br>')}</p>
+
+    <div class="section-label">Section II — Organizational Review</div>
+    <table>
+      <tr>
+        <th>Mandates / Functions</th>
+        <th>Division/s Within Bureau</th>
+        <th>Offices Within DENR</th>
+        <th>Offices Outside DENR</th>
+        <th>Challenges / Gaps</th>
+        <th>Recommendations</th>
+        <th>Remarks</th>
+      </tr>
+      ${revRows || '<tr><td colspan="7">(No data)</td></tr>'}
+    </table>
+
+    <div class="section-label">Section III — Indicators of an Effective Optimization Plan</div>
+    <ol>${data.effectivenessIndicators.map(i=>`<li>${i}</li>`).join('') || '<li>(No indicators entered)</li>'}</ol>
+
+    </body></html>`;
+
+  // Download as .doc (Word-compatible HTML)
+  const blob = new Blob([html], { type: 'application/msword' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `EMB-CAR_Optimization_${data.division || 'entry'}_${data.date || 'export'}.doc`;
+  a.click();
+}
+
+</script>
+<!-- EMAIL MODAL -->
+<div id="emailModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:10px;padding:32px 28px;max-width:420px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,0.2);">
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px;color:#1b3a2d;">Submit Form via Email</h3>
+    <p style="font-size:12.5px;color:#909098;margin-bottom:20px;">This will open your email client pre-filled with the form data. Enter the recipient's address below.</p>
+    <label style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#909098;display:block;margin-bottom:6px;">Recipient Email Address</label>
+    <input id="emailRecipient" type="email" placeholder="recipient@denr.gov.ph"
+      style="width:100%;border:1.5px solid #d4ddd6;border-radius:5px;padding:10px 12px;font-size:13.5px;font-family:inherit;margin-bottom:18px;">
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeModal()" style="background:white;border:1.5px solid #d4ddd6;color:#4a4a50;padding:9px 20px;border-radius:5px;font-family:inherit;font-size:12.5px;cursor:pointer;">Cancel</button>
+      <button onclick="sendEmail()" style="background:#1b3a2d;color:white;border:none;padding:9px 24px;border-radius:5px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">Open Email Client ✉</button>
+    </div>
+    <p style="font-size:11px;color:#909098;margin-top:12px;">💡 Tip: Make sure Gmail (or your mail app) is set as your default mail handler in browser settings.</p>
+  </div>
+</div>
+
+</body>
+</html>
