@@ -794,7 +794,6 @@ function buildEntryBlock(id) {
             <thead>
               <tr>
                 <th>Mandates / Functions</th>
-                <th>Division/s Within Bureau</th>
                 <th>Offices Within DENR (similar/related)</th>
                 <th>Offices Outside DENR — LGUs, NGAs (similar/related)</th>
                 <th>Challenges / Gaps</th>
@@ -947,7 +946,7 @@ function addRevRow(entryId) {
   const tbody = document.querySelector(`.rev-body[data-entry="${entryId}"]`);
   const tr = document.createElement('tr');
   const placeholders = [
-    'Mandate or function…', 'Division/s responsible…', 'DENR offices with similar function…',
+    'Mandate or function…', 'DENR offices with similar function…',
     'LGUs/NGAs with similar function…', 'Key challenges or gaps…',
     'Recommended actions…', 'Remarks…'
   ];
@@ -1041,12 +1040,11 @@ function collectData(entryId) {
     const ta = tr.querySelectorAll('textarea');
     data.organizationalReview.push({
       mandates: ta[0]?.value || '',
-      divisionsWithin: ta[1]?.value || '',
-      officesWithinDENR: ta[2]?.value || '',
-      officesOutsideDENR: ta[3]?.value || '',
-      challengesGaps: ta[4]?.value || '',
-      recommendations: ta[5]?.value || '',
-      remarks: ta[6]?.value || ''
+      officesWithinDENR: ta[1]?.value || '',
+      officesOutsideDENR: ta[2]?.value || '',
+      challengesGaps: ta[3]?.value || '',
+      recommendations: ta[4]?.value || '',
+      remarks: ta[5]?.value || ''
     });
   });
   block.querySelectorAll('.ind-list input').forEach(i => {
@@ -1061,6 +1059,7 @@ function collectData(entryId) {
 function submitEntry(entryId) {
   document.getElementById('emailModal').style.display = 'flex';
   document.getElementById('emailModal').dataset.entryId = entryId;
+  document.getElementById('clipboardNotice').style.display = 'none';
 }
 
 function closeModal() {
@@ -1073,7 +1072,7 @@ function sendEmail() {
   if (!recipient) { alert('Please enter a recipient email address.'); return; }
 
   const data = collectData(entryId);
-  const label = `${data.division || 'Entry'} — ${data.section || ''} — ${data.date || ''}`.trim();
+  const label = `${data.division || 'Entry'}${data.section ? ' — ' + data.section : ''} — ${data.date || ''}`.trim();
 
   let body = `EMB-CAR OPTIMIZATION FORM SUBMISSION\n`;
   body += `=====================================\n\n`;
@@ -1099,8 +1098,9 @@ function sendEmail() {
 
   body += `SECTION II — ORGANIZATIONAL REVIEW\n`;
   body += `------------------------------------\n`;
+  body += `(Division: ${data.division} | Section: ${data.section})\n`;
   data.organizationalReview.forEach((row, i) => {
-    body += `Row ${i+1}: ${row.mandates} | ${row.divisionsWithin} | ${row.officesWithinDENR} | ${row.officesOutsideDENR} | ${row.challengesGaps} | ${row.recommendations} | ${row.remarks}\n`;
+    body += `Row ${i+1}: ${row.mandates} | ${row.officesWithinDENR} | ${row.officesOutsideDENR} | ${row.challengesGaps} | ${row.recommendations} | ${row.remarks}\n`;
   });
 
   body += `\nSECTION III — EFFECTIVENESS INDICATORS\n`;
@@ -1111,7 +1111,23 @@ function sendEmail() {
 
   const subject = encodeURIComponent(`EMB-CAR Optimization Form — ${label}`);
   const bodyEnc = encodeURIComponent(body);
-  window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${subject}&body=${bodyEnc}`;
+  const mailtoUrl = `mailto:${encodeURIComponent(recipient)}?subject=${subject}&body=${bodyEnc}`;
+
+  // Copy to clipboard first (reliable fallback regardless of mailto length limits)
+  navigator.clipboard.writeText(body).then(() => {
+    document.getElementById('clipboardNotice').style.display = 'block';
+  }).catch(() => {
+    // clipboard not available — silent, mailto is still attempted
+  });
+
+  // Only open mailto if URL is within safe length (~2000 chars for broad compatibility)
+  if (mailtoUrl.length <= 2000) {
+    window.location.href = mailtoUrl;
+  } else {
+    // Too long for mailto — open email client with just subject, user pastes body
+    window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${subject}&body=${encodeURIComponent('(Form data is too large for mailto. Paste from clipboard — it has been automatically copied.)')}`;
+  }
+
   closeModal();
 }
 
@@ -1138,7 +1154,6 @@ function exportWord(entryId) {
   let revRows = data.organizationalReview.map(r =>
     `<tr>
       <td>${r.mandates}</td>
-      <td>${r.divisionsWithin}</td>
       <td>${r.officesWithinDENR}</td>
       <td>${r.officesOutsideDENR}</td>
       <td>${r.challengesGaps}</td>
@@ -1190,14 +1205,13 @@ function exportWord(entryId) {
     <table>
       <tr>
         <th>Mandates / Functions</th>
-        <th>Division/s Within Bureau</th>
         <th>Offices Within DENR</th>
         <th>Offices Outside DENR</th>
         <th>Challenges / Gaps</th>
         <th>Recommendations</th>
         <th>Remarks</th>
       </tr>
-      ${revRows || '<tr><td colspan="7">(No data)</td></tr>'}
+      ${revRows || '<tr><td colspan="6">(No data)</td></tr>'}
     </table>
 
     <div class="section-label">Section III — Indicators of an Effective Optimization Plan</div>
@@ -1220,13 +1234,16 @@ function exportWord(entryId) {
     <h3 style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px;color:#1b3a2d;">Submit Form via Email</h3>
     <p style="font-size:12.5px;color:#909098;margin-bottom:20px;">This will open your email client pre-filled with the form data. Enter the recipient's address below.</p>
     <label style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#909098;display:block;margin-bottom:6px;">Recipient Email Address</label>
-    <input id="emailRecipient" type="email" placeholder="recipient@denr.gov.ph"
+    <input id="emailRecipient" type="email" placeholder="recipient@denr.gov.ph" value="marcsahoy477@gmail.com"
       style="width:100%;border:1.5px solid #d4ddd6;border-radius:5px;padding:10px 12px;font-size:13.5px;font-family:inherit;margin-bottom:18px;">
+    <div id="clipboardNotice" style="display:none;background:#eaf7f0;border:1px solid #4a8c6a;border-radius:5px;padding:9px 12px;font-size:12px;color:#1b3a2d;margin-bottom:14px;">
+      ✅ Form data copied to clipboard. If the email body appears empty or truncated, paste it (Ctrl+V / Cmd+V) directly into your email.
+    </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button onclick="closeModal()" style="background:white;border:1.5px solid #d4ddd6;color:#4a4a50;padding:9px 20px;border-radius:5px;font-family:inherit;font-size:12.5px;cursor:pointer;">Cancel</button>
       <button onclick="sendEmail()" style="background:#1b3a2d;color:white;border:none;padding:9px 24px;border-radius:5px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">Open Email Client ✉</button>
     </div>
-    <p style="font-size:11px;color:#909098;margin-top:12px;">💡 Tip: Make sure Gmail (or your mail app) is set as your default mail handler in browser settings.</p>
+    <p style="font-size:11px;color:#909098;margin-top:12px;">💡 Make sure Gmail (or your mail app) is set as your default mail handler. If the email body is truncated, the form data will also be copied to your clipboard automatically — just paste it in.</p>
   </div>
 </div>
 
